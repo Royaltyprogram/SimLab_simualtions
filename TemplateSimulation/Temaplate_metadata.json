@@ -1,0 +1,14 @@
+{
+	"componentName": "string (Component name, e.g., 'ProjectileMotion', 컴포넌트 이름, 예: 'ProjectileMotion')",
+	"contributorGithub": "string (GitHub username of the contributor, e.g., 'Royaltyprogram', 기여자의 GitHub 사용자 이름, 예: 'Royaltyprogram')",
+	"contributorImage": "string (URL of the contributor's GitHub profile image, e.g., 'https://avatars.githubusercontent.com/u/165759805?v=4&size=64', 기여자의 GitHub 프로필 이미지 URL, 예: 'https://avatars.githubusercontent.com/u/165759805?v=4&size=64')",
+	"createdAt": "number (Timestamp of when the simulation was created, e.g., 0, 생성 시각의 타임스탬프, 예: 0)",
+	"description": "string (Detailed description of the simulation, e.g., 'Detailed description', 시뮬레이션에 대한 상세 설명, 예: '상세 설명')",
+	"githubRepo": "string (GitHub repository path, e.g., 'Royaltyprogram/SimLab', GitHub 저장소 경로, 예: 'Royaltyprogram/SimLab')",
+	"likes": "number (Number of likes the simulation has received, e.g., 2, 좋아요 수, 예: 2)",
+	"name": "string (Name of the simulation, e.g., 'Simulation Name', 시뮬레이션 이름, 예: '시뮬레이션 이름')",
+	"simulationFilename": "string (Filename of the simulation, e.g., 'ExampleSimulation', 시뮬레이션 파일명, 예: 'ExampleSimulation')",
+	"thumbnailPath": "string (Storage path for the thumbnail image, e.g., 'storage path', 썸네일 이미지의 저장소 경로, 예: 'storage 경로')",
+	"updatedAt": "number (Timestamp of the last update, e.g., 0, 마지막 업데이트 시각의 타임스탬프, 예: 0)",
+	"views": "number (Number of times the simulation has been viewed, e.g., 18, 조회 수, 예: 18)"
+  }

@@ -1,0 +1,14 @@
+{
+	"componentName": "RiemannSumSimulation",
+	"contributorGithub": "Royaltyprogram",
+	"contributorImage": "https://avatars.githubusercontent.com/u/165759805?v=4&size=64",
+	"createdAt": 20241129,
+	"description": "#### Scientific Concepts\n- **Core Physics/Math Principles**: The simulation will focus on the Riemann Sum method, which is a fundamental concept in calculus used to approximate the area under a curve. The method involves dividing the area under the curve into smaller rectangles or trapezoids and summing their areas.\n- **Key Variables and Parameters**:\n  - Function to be integrated (e.g., \\( f(x) = x^2 \\))\n  - Interval of integration (e.g., [a, b])\n  - Number of subintervals (n)\n  - Type of Riemann Sum (left, right, midpoint, trapezoidal)\n- **Required Calculations**:\n  - Calculate the width of each subinterval: \\( \\Delta x = \\frac{b - a}{n} \\)\n  - Calculate the height of each rectangle/trapezoid based on the chosen Riemann Sum type\n  - Sum the areas of all rectangles/trapezoids to approximate the total area",
+	"githubRepo": "Royaltyprogram/SimLab",
+	"likes": 0,
+	"name": "시뮬레이션 이름",
+	"simulationFilename": "RiemannSumSimulation",
+	"thumbnailPath": "https://firebasestorage.googleapis.com/v0/b/simlab-3a966.firebasestorage.app/o/thumbnails%2FRiemannSum.png?alt=media&token=7269c6b2-233a-4944-afa5-6251322d6441",
+	"updatedAt": 20241129,
+	"views": 0
+}

@@ -29,6 +29,36 @@ SimLab aims to:
 - **Contributor System**: Simple process for adding new simulations
 - **Firebase Backend**: Reliable infrastructure for simulation management and analytics
 
+## 🧪 Testing Your Simulation
+
+Before submitting your simulation, you can test it locally using the provided test app in the repository:
+
+1. Navigate to the `testapp` directory
+2. Place your simulation code in `YourSimulation.jsx`
+3. In `App.js`, update the imports and component usage:
+
+```jsx
+// App.js
+import YourSimulation from './YourSimulation'; // Update import
+
+function App() {
+  return (
+    <div className="App">
+      <YourSimulation /> {/* Replace TemplateSimulation with your component */}
+    </div>
+  );
+}
+```
+
+4. Run the test app to verify your simulation works correctly:
+```bash
+cd testapp
+npm install
+npm start
+```
+
+This will allow you to test your simulation in isolation and ensure it functions properly before submitting your contribution.
+
 ## 👥 Contributing Simulations
 
 Anyone can add new simulations to SimLab! To contribute:

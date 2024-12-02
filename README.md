@@ -1,6 +1,7 @@
 # SimLab: Simple Simulation Laboratory 🧪
 
 [![Main Repo](https://img.shields.io/badge/Main_Repo-SimLab-black?style=flat&logo=github)](https://github.com/Royaltyprogram/SimLab)
+[![Simulation Archive](https://img.shields.io/badge/Archive-Simulations-blue?style=flat&logo=github)](https://github.com/Royaltyprogram/SimLab_simualtions)
 [![Website](https://img.shields.io/badge/website-simlab.info-blue?style=flat&logo=internet-explorer)](https://simlabapp.com)
 [![Twitter Follow](https://img.shields.io/badge/follow-%40SimLab__official-1DA1F2?logo=twitter&style=flat)](https://twitter.com/sim_lab)
 

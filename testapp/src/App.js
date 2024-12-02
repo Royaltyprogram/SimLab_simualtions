@@ -1,11 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
-import TemplateSimulation from './yoursimulation';
+import AngularMomentumSimulation from './components/YourSimulation';
 
 function App() {
   return (
     <div className="App">
-        <TemplateSimulation />
+        <AngularMomentumSimulation />
     </div>
   );
 }

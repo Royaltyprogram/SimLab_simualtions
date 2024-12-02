@@ -1,7 +1,7 @@
 # SimLab: Simple Simulation Laboratory 🧪
 
-[![Website](https://img.shields.io/badge/website-simlab.info-blue?style=flat&logo=internet-explorer)](https://simlab.info)
-[![Twitter Follow](https://img.shields.io/badge/follow-%40SimLab__official-1DA1F2?logo=twitter&style=flat)](https://twitter.com/SimLab_official)
+[![Website](https://img.shields.io/badge/website-simlab.info-blue?style=flat&logo=internet-explorer)](https://simlabapp.com)
+[![Twitter Follow](https://img.shields.io/badge/follow-%40SimLab__official-1DA1F2?logo=twitter&style=flat)](https://twitter.com)
 
 [![React](https://img.shields.io/badge/React-18.0.0-61DAFB?logo=react&logoColor=white)](https://reactjs.org/)
 [![Firebase](https://img.shields.io/badge/Firebase-10.7.0-FFCA28?logo=firebase&logoColor=black)](https://firebase.google.com/)

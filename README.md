@@ -30,12 +30,15 @@ SimLab aims to:
 
 ## 👥 Contributing Simulations
 
-Anyone can add new simulations to SimLab! Here's the process:
+Anyone can add new simulations to SimLab! To contribute:
 
 1. Fork the repository
-2. Create your simulation
-3. Submit a Pull Request
-4. After review and approval, it will be added to SimLab
+2. Reference the `TemplateSimulation` and `ExampleSimulation` folders to understand the structure
+3. Create your simulation component and its metadata JSON file
+4. Submit a Pull Request
+5. After review and approval, your simulation will be added to SimLab
+
+The repository provides template files and examples to help you get started. You'll need to create both the simulation component and a metadata file that includes information about your simulation.
 
 ### Simulation Requirements
 
@@ -46,7 +49,11 @@ Your simulation should:
 - Use React and follow our code style
 - Be well-documented with comments
 
-### Component Template
+### Adding Your Simulation
+
+You can contribute by referring to the `TemplateSimulation` and `ExampleSimulation` folders in the repository. Each simulation contribution should include:
+
+1. **Simulation Component File** (`YourSimulation.jsx`):
 ```jsx
 const YourSimulation = () => {
   // Your simulation logic
@@ -58,6 +65,64 @@ const YourSimulation = () => {
 };
 
 export default YourSimulation;
+```
+
+2. **Metadata File** (`simulation.json`):
+```json
+{
+  "componentName": "YourSimulation",
+  "contributorGithub": "your-github-username",
+  "contributorImage": "https://avatars.githubusercontent.com/u/your-id?v=4&size=64",
+  "createdAt": 0,
+  "description": "Detailed description in markdown format converted to string",
+  "githubRepo": "your-github-username/SimLab",
+  "likes": 0,
+  "name": "Your Simulation Name",
+  "simulationFilename": "YourSimulation",
+  "thumbnailPath": "path/to/thumbnail/image",
+  "updatedAt": 0,
+  "views": 0
+}
+```
+
+**Metadata Fields Explanation:**
+- `componentName`: Name of your React component
+- `contributorGithub`: Your GitHub username
+- `contributorImage`: URL to your GitHub profile picture
+- `createdAt`: Leave as 0 (will be set automatically)
+- `description`: Markdown string explaining your simulation
+- `githubRepo`: Your GitHub repository path
+- `likes`: Leave as 0 (will be updated automatically)
+- `name`: Display name of your simulation
+- `simulationFilename`: Name of your simulation file without extension
+- `thumbnailPath`: Path to your simulation's thumbnail
+- `updatedAt`: Leave as 0 (will be updated automatically)
+- `views`: Leave as 0 (will be tracked automatically)
+
+Note: For the `description` field, provide your explanation as a markdown string. This allows for rich formatting including:
+- Mathematical equations using KaTeX
+- Code blocks
+- Lists and tables
+- Images and diagrams
+
+Example markdown structure:
+```markdown
+# Simulation Title
+
+## Introduction
+Brief overview of the concept...
+
+## Mathematical Background
+Key equations and explanations...
+
+## How to Use
+1. Adjust parameter X
+2. Observe effect Y
+3. ...
+
+## Additional Resources
+- Reference 1
+- Reference 2
 ```
 
 ## 🔧 Technical Stack

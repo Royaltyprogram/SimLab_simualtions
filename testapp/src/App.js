@@ -1,10 +1,10 @@
 import './App.css';
-import AngularMomentumSimulation from './components/YourSimulation';
+import AttentionSimulator from './components/YourSimulation';
 
 function App() {
   return (
     <div className="App">
-        <AngularMomentumSimulation />
+        <AttentionSimulator />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { Line } from 'react-chartjs-2';
+import { Line, Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -23,7 +23,6 @@ ChartJS.register(
   Legend
 );
 
-// Example sentences
 const EXAMPLE_SENTENCES = [
   {
     id: 1,
@@ -55,9 +54,46 @@ const WORD_EMBEDDINGS = {
   'fast': [0.5, 0.4, 0.2, -0.3]
 };
 
+const MatrixVisualization = ({ matrix, rowLabels, colLabels, title }) => (
+  <div className="p-4 border rounded">
+    <h3 className="text-lg font-semibold mb-2">{title}</h3>
+    <div className="overflow-x-auto">
+      <table className="min-w-full">
+        <thead>
+          <tr>
+            <th></th>
+            {colLabels.map((label, i) => (
+              <th key={i} className="px-4 py-2 text-center">{label}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {matrix.map((row, i) => (
+            <tr key={i}>
+              <td className="px-4 py-2 font-medium">{rowLabels[i]}</td>
+              {row.map((value, j) => (
+                <td
+                  key={j}
+                  className="px-4 py-2 text-center"
+                  style={{
+                    backgroundColor: `rgba(66, 153, 225, ${Math.abs(value)})`,
+                    color: Math.abs(value) > 0.5 ? 'white' : 'black',
+                  }}
+                >
+                  {value.toFixed(3)}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+);
+
 const VectorVisualization = ({ vectors, labels, title, description }) => (
-  <div className="bg-white rounded-xl shadow-md p-6">
-    <h3 className="text-xl font-bold mb-2 text-gray-800">{title}</h3>
+  <div className="p-4 border rounded">
+    <h3 className="text-lg font-semibold mb-2">{title}</h3>
     <p className="text-sm text-gray-600 mb-4">{description}</p>
     <div className="h-48">
       <Line
@@ -85,10 +121,12 @@ const VectorVisualization = ({ vectors, labels, title, description }) => (
 
 const AttentionSimulator = () => {
   const [selectedSentence, setSelectedSentence] = useState(EXAMPLE_SENTENCES[0]);
+  const [selectedToken, setSelectedToken] = useState(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [animationSpeed, setAnimationSpeed] = useState(1);
+  const [showDetails, setShowDetails] = useState(true);
 
-  // Get tokens and embeddings
+  // Tokenize and get embeddings
   const tokens = useMemo(() => 
     selectedSentence.text.toLowerCase().split(' '),
     [selectedSentence]
@@ -99,7 +137,7 @@ const AttentionSimulator = () => {
     [tokens]
   );
 
-  // Initialize weights with Xavier initialization
+  // Initialize attention weights with Xavier initialization
   const initializeWeights = useCallback((inputDim, outputDim) => {
     const limit = Math.sqrt(6 / (inputDim + outputDim));
     return Array(outputDim).fill().map(() => 
@@ -129,7 +167,7 @@ const AttentionSimulator = () => {
   const { attentionScores, attentionWeights } = useMemo(() => {
     const scores = Q.map(q => K.map(k => {
       const dotProduct = q.reduce((sum, qi, i) => sum + qi * k[i], 0);
-      return dotProduct / Math.sqrt(4);
+      return dotProduct / Math.sqrt(4); // Scaling factor
     }));
 
     const weights = scores.map(row => {
@@ -153,16 +191,20 @@ const AttentionSimulator = () => {
   );
 
   return (
-    <div className="flex flex-col p-4 max-w-6xl mx-auto">
-      <div className="space-y-6">
-        {/* Controls */}
-        <div className="bg-white rounded-xl shadow-md p-6">
-          <h2 className="text-2xl font-bold mb-4">Self-Attention Visualization</h2>
-          <div className="flex flex-wrap gap-3 mb-6">
+    <div className="flex flex-col lg:flex-row gap-4 p-4 max-w-full mx-auto">
+      {/* Main visualization area */}
+      <div className="flex-1 space-y-4">
+        {/* Sentence selection and controls */}
+        <div className="bg-white rounded-lg shadow-sm p-4">
+          <h2 className="text-xl font-bold mb-4">Self-Attention Visualization</h2>
+          <div className="flex flex-wrap gap-2 mb-4">
             {EXAMPLE_SENTENCES.map(sentence => (
               <button
                 key={sentence.id}
-                onClick={() => setSelectedSentence(sentence)}
+                onClick={() => {
+                  setSelectedSentence(sentence);
+                  setSelectedToken(null);
+                }}
                 className={`px-4 py-2 rounded-lg transition-colors ${
                   selectedSentence.id === sentence.id
                     ? 'bg-blue-500 text-white'
@@ -174,41 +216,37 @@ const AttentionSimulator = () => {
             ))}
           </div>
           
-          <div className="flex items-center gap-4">
+          {/* Playback controls */}
+          <div className="flex items-center gap-4 mb-4">
             <button
               onClick={() => setCurrentStep(Math.max(1, currentStep - 1))}
-              className="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 disabled:opacity-50"
-              disabled={currentStep === 1}
+              className="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200"
             >
               Previous
             </button>
-            <span className="font-medium">Step {currentStep} of 4</span>
+            <span className="font-medium">Step {currentStep}</span>
             <button
               onClick={() => setCurrentStep(Math.min(4, currentStep + 1))}
-              className="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 disabled:opacity-50"
-              disabled={currentStep === 4}
+              className="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200"
             >
               Next
             </button>
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-600">Animation Speed:</span>
-              <input
-                type="range"
-                min="0.5"
-                max="2"
-                step="0.1"
-                value={animationSpeed}
-                onChange={e => setAnimationSpeed(parseFloat(e.target.value))}
-                className="w-24"
-              />
-              <span className="text-sm text-gray-600">{animationSpeed}x</span>
-            </div>
+            <input
+              type="range"
+              min="0.5"
+              max="2"
+              step="0.1"
+              value={animationSpeed}
+              onChange={e => setAnimationSpeed(parseFloat(e.target.value))}
+              className="w-32"
+            />
+            <span className="text-sm text-gray-600">Speed: {animationSpeed}x</span>
           </div>
         </div>
 
-        {/* Step 1: Query, Key, Value Generation */}
+        {/* Step 1: Q, K, V Generation */}
         {currentStep === 1 && (
-          <div className="space-y-6">
+          <div className="space-y-4">
             <VectorVisualization
               vectors={Q}
               labels={tokens.map(t => `${t} (Query)`)}
@@ -232,47 +270,17 @@ const AttentionSimulator = () => {
 
         {/* Step 2: Attention Scores */}
         {currentStep === 2 && (
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <h3 className="text-xl font-bold mb-4 text-gray-800">Attention Scores (Q·K^T)</h3>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead>
-                  <tr>
-                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                    {tokens.map((token, i) => (
-                      <th key={i} className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        {token}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {attentionScores.map((row, i) => (
-                    <tr key={i}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {tokens[i]}
-                      </td>
-                      {row.map((score, j) => (
-                        <td
-                          key={j}
-                          className="px-6 py-4 whitespace-nowrap text-sm transition-all duration-500"
-                          style={{
-                            backgroundColor: `rgba(59, 130, 246, ${Math.abs(score) / Math.max(...row.map(Math.abs))})`,
-                            color: Math.abs(score) / Math.max(...row.map(Math.abs)) > 0.5 ? 'white' : 'black',
-                          }}
-                        >
-                          {score.toFixed(3)}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+          <div className="space-y-4">
+            <MatrixVisualization
+              matrix={attentionScores}
+              rowLabels={tokens}
+              colLabels={tokens}
+              title="Attention Scores (Q·K^T)"
+            />
           </div>
         )}
 
-        {/* Step 3: Attention Weights */}
+        {/* Step 3: Softmax Weights */}
         {currentStep === 3 && (
           <div className="space-y-6">
             <div className="bg-white rounded-xl shadow-md p-6">
@@ -316,7 +324,7 @@ const AttentionSimulator = () => {
 
             <div className="bg-white rounded-xl shadow-md p-6">
               <h3 className="text-xl font-bold mb-4 text-gray-800">Attention Distribution</h3>
-              <div className="space-y-4">
+              <div className="h-64">
                 {tokens.map((sourceToken, i) => (
                   <div key={i} className="mb-4">
                     <div className="text-sm font-medium text-gray-700 mb-1">{sourceToken}</div>
@@ -336,20 +344,118 @@ const AttentionSimulator = () => {
                   </div>
                 ))}
               </div>
+              <p className="text-sm text-gray-500 mt-4">
+                Each bar shows how much attention each token pays to other tokens
+              </p>
             </div>
           </div>
         )}
 
         {/* Step 4: Final Outputs */}
         {currentStep === 4 && (
-          <VectorVisualization
-            vectors={outputs}
-            labels={tokens}
-            title="Final Context-Aware Representations"
-            description="The final output vectors after applying attention weights"
-          />
+          <div className="space-y-4">
+            <VectorVisualization
+              vectors={outputs}
+              labels={tokens}
+              title="Final Context-Aware Representations"
+              description="The final output vectors after applying attention weights"
+            />
+          </div>
         )}
       </div>
+
+      {/* Explanation panel */}
+      {showDetails && (
+        <div className="lg:w-80 bg-white rounded-lg shadow-sm p-4 space-y-4">
+          <div className="flex justify-between items-center">
+            <h3 className="text-lg font-bold">Step Details</h3>
+            <button
+              onClick={() => setShowDetails(false)}
+              className="text-gray-500 hover:text-gray-700"
+            >
+              ✕
+            </button>
+          </div>
+          
+          <div className="prose prose-sm">
+            {currentStep === 1 && (
+              <>
+                <h4>Query, Key, and Value Generation</h4>
+                <p>
+                  Each token's embedding is transformed into three different vectors:
+                  Query (Q), Key (K), and Value (V) vectors through learned weight matrices.
+                </p>
+                <ul>
+                  <li>Q = embedding × W_Q</li>
+                  <li>K = embedding × W_K</li>
+                  <li>V = embedding × W_V</li>
+                </ul>
+              </>
+            )}
+            {currentStep === 2 && (
+              <>
+                <h4>Attention Score Calculation</h4>
+                <p>
+                  Attention scores are computed by taking the dot product of Query
+                  and Key vectors, showing how much each token should attend to others.
+                </p>
+                <p className="text-sm font-mono">
+                  Score = Q × K^T / √d_k
+                </p>
+              </>
+            )}
+            {currentStep === 3 && (
+              <>
+                <h4>Softmax Transformation</h4>
+                <p>
+                  Attention scores are converted to probabilities using the softmax
+                  function, ensuring they sum to 1 for each token.
+                </p>
+                <p className="text-sm font-mono">
+                  weights = softmax(scores)
+                </p>
+              </>
+            )}
+            {currentStep === 4 && (
+              <>
+                <h4>Final Output Generation</h4>
+                <p>
+                  The final representation for each token is computed as a weighted
+                  sum of value vectors, using the attention weights.
+                </p>
+                <p className="text-sm font-mono">
+                  output = weighted_sum(weights × V)
+                </p>
+              </>
+            )}
+          </div>
+
+          {selectedToken && (
+            <div className="mt-4 p-3 bg-gray-50 rounded">
+              <h4 className="font-bold mb-2">Selected Token: {selectedToken}</h4>
+              <div className="space-y-2">
+                <p className="text-sm">Attention Distribution:</p>
+                {tokens.map((token, idx) => (
+                  <div key={idx} className="flex items-center gap-2">
+                    <span className="text-sm">{token}:</span>
+                    <div 
+                      className="flex-1 h-4 bg-blue-100 rounded overflow-hidden"
+                      title={`${(attentionWeights[tokens.indexOf(selectedToken)][idx] * 100).toFixed(1)}%`}
+                    >
+                      <div
+                        className="h-full bg-blue-500"
+                        style={{
+                          width: `${attentionWeights[tokens.indexOf(selectedToken)][idx] * 100}%`
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

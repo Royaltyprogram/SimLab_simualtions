@@ -2,6 +2,7 @@
 
 [![Main Repo](https://img.shields.io/badge/Main_Repo-SimLab-black?style=flat&logo=github)](https://github.com/Royaltyprogram/SimLab)
 [![Simulation Archive](https://img.shields.io/badge/Archive-Simulations-blue?style=flat&logo=github)](https://github.com/Royaltyprogram/SimLab_simualtions)
+[![SimLab Generator](https://img.shields.io/badge/Generator-SimLab-green?style=flat&logo=github)](https://github.com/Royaltyprogram/SimLab_Generator)
 [![Website](https://img.shields.io/badge/website-simlab.info-blue?style=flat&logo=internet-explorer)](https://simlabapp.com)
 [![Twitter Follow](https://img.shields.io/badge/follow-%40SimLab__official-1DA1F2?logo=twitter&style=flat)](https://twitter.com/sim_lab)
 
@@ -29,6 +30,10 @@ SimLab aims to:
 - **Real-time Updates**: Immediate visual feedback for parameter adjustments
 - **Contributor System**: Simple process for adding new simulations
 - **Firebase Backend**: Reliable infrastructure for simulation management and analytics
+
+## 🔨 SimLab Generator
+
+To streamline the simulation creation process, you can use [SimLab_Generator](https://github.com/Royaltyprogram/SimLab_Generator) - a dedicated tool for generating SimLab-compatible simulation code. This tool helps maintain consistency and reduce development time when creating new simulations.
 
 ## 🧪 Testing Your Simulation
 

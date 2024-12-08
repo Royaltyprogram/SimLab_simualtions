@@ -1,10 +1,10 @@
 import './App.css';
-import AttentionSimulator from './components/YourSimulation';
+import TemplateSimulation from './components/YourSimulation';
 
 function App() {
   return (
     <div className="App">
-        <AttentionSimulator />
+        <TemplateSimulation />
     </div>
   );
 }
